@@ -1,0 +1,71 @@
+#include <LiquidCrystal_I2C.h>
+
+#define I2C_ADDR    0x27
+#define LCD_COLUMNS 20
+#define LCD_LINES   4
+LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLUMNS, LCD_LINES);
+float a_r;
+float b_r;
+float y_r[20];
+float y_p[20];
+void setup() {
+  randomSeed(4535653);
+  a_r=random(0, 10)/10.0;
+  b_r=(random(0, 10)/10.0);
+  lcd.init();
+  lcd.backlight();
+  for (int i = 0; i < 20; i++)
+  {
+  y_r[i]=(a_r+b_r*i)+random(-20,20)/100.0;
+  }
+}
+
+void Rsqrt(float yreal[], float tpred[], int len){
+  float mean=0;
+  float SSres=0;
+  float SStot=0;
+  for (int i = 0; i < len; i++)
+  {
+    mean=mean+yreal[i];
+  }
+  mean=mean/len;
+  for (int i = 0; i < len; i++)
+  {
+    SSres=SSres+(yreal[i]-tpred[i])*(yreal[i]-tpred[i]);
+    SStot=SStot+(yreal[i]-mean)*(yreal[i]-mean);
+  }
+  lcd.setCursor(0, 3);
+  lcd.print("R^2=");
+  lcd.print(1-(SSres/SStot));
+}
+
+void loop() {
+  float a=0.5;
+  float b=0.5;
+  float lr = 0.0001;
+  lcd.setCursor(0, 0);
+  lcd.print("a_r=");
+  lcd.print(a_r);
+  lcd.print(" b_r=");
+  lcd.print(b_r);
+  for (int i = 0; i < 3000; i++){
+    for (int x = 0; x < 20; x++)
+    {
+      a = a - lr*2 * (a + b * x - y_r[x]);
+      b = b - lr*2 * (a + b * x - y_r[x]) * x;
+    }
+  }
+  lcd.setCursor(0, 1);
+  lcd.print("a_p=");
+  lcd.print(a);
+  lcd.print(" b_p=");
+  lcd.print(b);
+  for (int i = 0; i < 20; i++)
+  {
+    y_p[i]=(a+b*i+1);
+  }
+  lcd.setCursor(0, 2);
+  lcd.print("y_next=");
+  lcd.print(a+b*21+1);
+  Rsqrt(y_r,y_p,20);
+}

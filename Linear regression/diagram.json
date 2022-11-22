@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "author": "Дмитрий Шигаров",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 72.67, "left": 41.33, "attrs": {} },
+    {
+      "type": "wokwi-lcd2004",
+      "id": "lcd1",
+      "top": -158.67,
+      "left": 24.67,
+      "attrs": { "pins": "i2c" }
+    }
+  ],
+  "connections": [
+    [ "lcd1:GND", "uno:GND.2", "black", [ "h-45.67", "v423.37", "h236" ] ],
+    [ "lcd1:VCC", "uno:5V", "red", [ "h-31.01", "v436.54", "h212" ] ],
+    [ "lcd1:SDA", "uno:A4", "green", [ "h-8.34", "v402.37", "h270" ] ],
+    [ "lcd1:SCL", "uno:A5", "green", [ "h-0.34", "v386.2", "h276.67" ] ]
+  ]
+}
