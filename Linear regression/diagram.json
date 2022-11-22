@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "Дмитрий Шигаров",
+  "author": "DASADEUS",
   "editor": "wokwi",
   "parts": [
     { "type": "wokwi-arduino-uno", "id": "uno", "top": 72.67, "left": 41.33, "attrs": {} },
