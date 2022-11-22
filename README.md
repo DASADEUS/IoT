@@ -1,2 +1,2 @@
 # IoT
-Simulate this project on https://wokwi.com
+Simulate projects on https://wokwi.com
